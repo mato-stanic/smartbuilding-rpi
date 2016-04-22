@@ -29,6 +29,9 @@ public class ProcessData {
             List<String> daysList = apartmentCronJob.getDays();
             if(daysList.contains(currentDay)){
                 if(apartmentCronJob.getTime().equals(time))
+                {
+                    ControllGpio.cronControl(apartmentCronJob.getRoom(), apartmentCronJob.getAction());
+                }
                     System.out.println(apartmentCronJob.toString());
             }
         }
