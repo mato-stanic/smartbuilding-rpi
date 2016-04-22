@@ -26,8 +26,11 @@ dependencies {
 
 jar {
     manifest {
+
         attributes(
-                'Class-Path': 'lib/postgresql-9.4.1208.jar',
+//                'Class-Path': 'lib/postgresql-9.4.1208.jar, lib/pi4j-core.jar',
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+
                 'Main-Class': 'hr.m2stanic.smartbuilding.JDBCExample'
         )
     }

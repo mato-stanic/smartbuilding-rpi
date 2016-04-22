@@ -1,15 +1,19 @@
 package hr.m2stanic.smartbuilding;
 
+import com.pi4j.io.gpio.Pin;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mato on 21.04.16..
  */
 public class ProcessData {
 
-    public static void processCrons(List<ApartmentCronJob> apartmentCronJobs){
+    public static void processCrons(List<ApartmentCronJob> apartmentCronJobs, HashMap<Long, HashMap<String, Pin>> apartmentGpios){
         String currentDay="";
         String time = "";
         Calendar calendar = Calendar.getInstance();
@@ -26,14 +30,33 @@ public class ProcessData {
         }
 
         for (ApartmentCronJob apartmentCronJob : apartmentCronJobs) {
+            //get rooms for apartment from hashmap
+
+            HashMap<String, Pin> apartmentRooms = apartmentGpios.get(Long.valueOf(apartmentCronJob.getApartmentId()));
             List<String> daysList = apartmentCronJob.getDays();
             if(daysList.contains(currentDay)){
                 if(apartmentCronJob.getTime().equals(time))
                 {
-                    ControllGpio.cronControl(apartmentCronJob.getRoom(), apartmentCronJob.getAction());
+                    Pin pinToChange = apartmentRooms.get(apartmentCronJob.getRoom());
+                    ControlGpio.cronControl(apartmentCronJob.getAction(), pinToChange);
                 }
-                    System.out.println(apartmentCronJob.toString());
             }
+        }
+    }
+
+    public static void processApartmentState(List<Apartment> apartments, HashMap<Long, HashMap<String, Pin>> apartmentGpios){
+
+        //todo: ovo tu treba ispravit jel nece radit dok ne spojim ostale led
+        for (Apartment apartment : apartments) {
+            if(apartment.getApartmentId() == 103){
+                HashMap<String, Pin> apartmentRooms = apartmentGpios.get(apartment.getApartmentId());
+
+                for (Map.Entry<String, Pin> stringPinEntry : apartmentRooms.entrySet()) {
+                    System.out.println(stringPinEntry);
+                }
+                ControlGpio.roomState(apartment, apartmentRooms);
+            }
+
         }
     }
 }

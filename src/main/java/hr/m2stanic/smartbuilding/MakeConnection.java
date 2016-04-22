@@ -1,5 +1,7 @@
 package hr.m2stanic.smartbuilding;
 
+import com.pi4j.io.gpio.Pin;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,7 +15,7 @@ public class MakeConnection {
 
 
 
-        public static void getCrons(){
+        public static void getCrons(HashMap<Long, HashMap<String, Pin>> apartmentGpios){
             Map<Integer, List<String>> cronDays = new HashMap<>();
             Map<Integer, ApartmentCronJob> apartmentCronJobs = new TreeMap<>();
             Connection c = null;
@@ -63,11 +65,7 @@ public class MakeConnection {
                     result.add(acj);
                 }
 
-//                System.out.println("------ Apartment Crons ------");
-//                for (ApartmentCronJob apartmentCronJob : result) {
-//                    System.out.println(apartmentCronJob.toString());
-//                }
-                ProcessData.processCrons(result);
+                ProcessData.processCrons(result, apartmentGpios);
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
@@ -76,7 +74,7 @@ public class MakeConnection {
 
     }
 
-    public static void getApartments(){
+    public static void getApartments(HashMap<Long, HashMap<String, Pin>> apartmentGpios){
         List<Apartment> apartments = new ArrayList<>();
         Connection c = null;
         Statement stmt = null;
@@ -113,10 +111,8 @@ public class MakeConnection {
             stmt.close();
             c.close();
 
-//            System.out.println("------ Apartment Layouts ------");
-//            for (Apartment apartment : apartments) {
-//                System.out.println(apartment.toString());
-//            }
+
+            ProcessData.processApartmentState(apartments, apartmentGpios);
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
