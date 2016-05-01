@@ -20,11 +20,6 @@ public class JDBCExample {
         System.out.println("Set all pins init to LOW");
         initPinStates(apartmentGpios);
 
-        Runnable apartmentCrons = new Runnable() {
-            public void run() {
-                MakeConnection.getCrons(apartmentGpios);
-            }
-        };
 
         Runnable apartments = new Runnable() {
             @Override
@@ -32,9 +27,6 @@ public class JDBCExample {
                 MakeConnection.getApartments(apartmentGpios);
             }
         };
-
-        ScheduledExecutorService executorCrons = Executors.newScheduledThreadPool(1);
-        executorCrons.scheduleAtFixedRate(apartmentCrons, 0, 30, TimeUnit.SECONDS);
 
         ScheduledExecutorService executorApartment = Executors.newScheduledThreadPool(1);
         executorApartment.scheduleAtFixedRate(apartments, 0, 1, TimeUnit.SECONDS);
@@ -53,14 +45,14 @@ public class JDBCExample {
         apartment1a.put("livingroom", RaspiPin.GPIO_23);
         mapToReturn.put(Long.valueOf(103), apartment1a);
 
-//        //apartment 1b rooms combinations gpio pins
-//        HashMap<String, Pin> apartment1b = new HashMap<>();
-//        apartment1b.put("kitchen", RaspiPin.GPIO_10);
-//        apartment1b.put("bedroom", RaspiPin.GPIO_11);
-//        apartment1b.put("bathroom", RaspiPin.GPIO_14);
-//        apartment1b.put("hallway", RaspiPin.GPIO_06);
-//        apartment1b.put("livingroom", RaspiPin.GPIO_13);
-//        mapToReturn.put(Long.valueOf(104), apartment1b);
+        //apartment 1b rooms combinations gpio pins
+        HashMap<String, Pin> apartment1b = new HashMap<>();
+        apartment1b.put("kitchen", RaspiPin.GPIO_10);
+        apartment1b.put("bedroom", RaspiPin.GPIO_11);
+        apartment1b.put("bathroom", RaspiPin.GPIO_14);
+        apartment1b.put("hallway", RaspiPin.GPIO_06);
+        apartment1b.put("livingroom", RaspiPin.GPIO_13);
+        mapToReturn.put(Long.valueOf(104), apartment1b);
 //
 //        //apartment 2a rooms combinations gpio pins
 //        HashMap<String, Pin> apartment2a = new HashMap<>();

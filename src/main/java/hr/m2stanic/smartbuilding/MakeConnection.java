@@ -14,66 +14,6 @@ import java.util.*;
 public class MakeConnection {
 
 
-
-        public static void getCrons(HashMap<Long, HashMap<String, Pin>> apartmentGpios){
-            Map<Integer, List<String>> cronDays = new HashMap<>();
-            Map<Integer, ApartmentCronJob> apartmentCronJobs = new TreeMap<>();
-            Connection c = null;
-            Statement stmt = null;
-            try {
-                Class.forName("org.postgresql.Driver");
-                c = DriverManager
-                        .getConnection("jdbc:postgresql://127.0.0.1:9995/smartbuilding", "m2stanic", "m2stanic");
-                c.setAutoCommit(false);
-
-                stmt = c.createStatement();
-
-                String select = " select ac.id, ac.apartment_id, ac.time, ac.action, ac.room, acd.day " +
-                        " from apartment_cron ac left outer join apartment_cron_days acd on ac.id=acd.apartment_cron_id " +
-                        " order by ac.id;";
-                ResultSet rs = stmt.executeQuery(select);
-                while (rs.next()) {
-                    Integer apartmentCronId = rs.getInt("id");
-                    ApartmentCronJob acj = apartmentCronJobs.get(apartmentCronId);
-                    if (acj == null) {
-                        int aptId = rs.getInt("apartment_id");
-                        String time = rs.getString("time");
-                        String room = rs.getString("room");
-                        String action = rs.getString("action");
-                        acj = new ApartmentCronJob();
-                        acj.setId(apartmentCronId);
-                        acj.setApartmentId(aptId);
-                        acj.setTime(time);
-                        acj.setRoom(room);
-                        acj.setAction(action);
-                        apartmentCronJobs.put(apartmentCronId, acj);
-                        // create a new list for this apartmentCronJob
-                        cronDays.put(apartmentCronId, new ArrayList<String>());
-                    }
-                    if (!rs.wasNull()) {
-                        List<String> days = cronDays.get(apartmentCronId);
-                        days.add(rs.getString("day"));
-                    }
-                }
-                rs.close();
-                stmt.close();
-                c.close();
-
-                List<ApartmentCronJob> result = new ArrayList<>();
-                for (ApartmentCronJob acj : apartmentCronJobs.values()) {
-                    acj.setDays(cronDays.get(acj.getId()));
-                    result.add(acj);
-                }
-
-                ProcessData.processCrons(result, apartmentGpios);
-
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
-            System.exit(0);
-        }
-
-    }
-
     public static void getApartments(HashMap<Long, HashMap<String, Pin>> apartmentGpios){
         List<Apartment> apartments = new ArrayList<>();
         Connection c = null;
