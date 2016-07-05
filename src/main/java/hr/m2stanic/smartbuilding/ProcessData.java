@@ -2,8 +2,6 @@ package hr.m2stanic.smartbuilding;
 
 import com.pi4j.io.gpio.Pin;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +22,14 @@ public class ProcessData {
                     System.out.println(stringPinEntry);
                 }
                 ControlGpio.roomState(apartment, apartmentRooms);
-            }
-            else if(apartment.getApartmentId() == 104){
+            }else if(apartment.getApartmentId() == 104){
+                HashMap<String, Pin> apartmentRooms = apartmentGpios.get(apartment.getApartmentId());
+
+                for (Map.Entry<String, Pin> stringPinEntry : apartmentRooms.entrySet()) {
+                    System.out.println(stringPinEntry);
+                }
+                ControlGpio.roomState(apartment, apartmentRooms);
+            }else if(apartment.getApartmentId() == 131){
                 HashMap<String, Pin> apartmentRooms = apartmentGpios.get(apartment.getApartmentId());
 
                 for (Map.Entry<String, Pin> stringPinEntry : apartmentRooms.entrySet()) {

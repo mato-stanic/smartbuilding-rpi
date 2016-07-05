@@ -51,7 +51,6 @@ public class MakeConnection {
             stmt.close();
             c.close();
 
-
             ProcessData.processApartmentState(apartments, apartmentGpios);
 
         } catch ( Exception e ) {
