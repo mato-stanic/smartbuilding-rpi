@@ -20,6 +20,6 @@ Ovo pokrenit u terminalu: ssh -L9995:localhost:5432 root@89.107.57.144
 usput trebalo bi dodat ovu naredbu da se izvrsava prilikom boot-a
 
 i sad je stvar napokon skoro gotova, pokrenes fucking aplikaciju sa:
-sudo java -jar Smartbuilding-1.0-SNAPSHOT.jar
+sudo java -jar Smartbuilding-1.0.jar
 
 i molis boga da sve radi :D
