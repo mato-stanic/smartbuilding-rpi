@@ -12,16 +12,8 @@ public class Apartment {
     private boolean kitchen;
     private boolean bathroom;
     private boolean bedroom;
-
-    public Apartment(Long id, Long apartmentId, boolean livingRoom, boolean hallway, boolean kitchen, boolean bathroom, boolean bedroom) {
-        this.id = id;
-        this.apartmentId = apartmentId;
-        this.livingRoom = livingRoom;
-        this.hallway = hallway;
-        this.kitchen = kitchen;
-        this.bathroom = bathroom;
-        this.bedroom = bedroom;
-    }
+    private boolean motionDetection;
+    private boolean motionDetectionEnabled;
 
     public Apartment(){}
 
@@ -79,6 +71,22 @@ public class Apartment {
 
     public void setBedroom(boolean bedroom) {
         this.bedroom = bedroom;
+    }
+
+    public boolean isMotionDetection() {
+        return motionDetection;
+    }
+
+    public void setMotionDetection(boolean motionDetection) {
+        this.motionDetection = motionDetection;
+    }
+
+    public boolean isMotionDetectionEnabled() {
+        return motionDetectionEnabled;
+    }
+
+    public void setMotionDetectionEnabled(boolean motionDetectionEnabled) {
+        this.motionDetectionEnabled = motionDetectionEnabled;
     }
 
     @Override

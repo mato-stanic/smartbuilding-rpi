@@ -1,15 +1,17 @@
 package hr.m2stanic.smartbuilding;
 
 import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class JDBCExample {
+public class MainClass {
 
-    public static void main(String[] argv) {
+    public static void main(String[] argv) throws InterruptedException{
 
         System.out.println("Init hash map apartmentGpios");
         HashMap<Long, HashMap<String, Pin>> apartmentGpios = createHashMaps();
@@ -27,6 +29,7 @@ public class JDBCExample {
 
         ScheduledExecutorService executorApartment = Executors.newScheduledThreadPool(1);
         executorApartment.scheduleAtFixedRate(apartments, 0, 1, TimeUnit.SECONDS);
+
 
     }
 
@@ -71,7 +74,7 @@ public class JDBCExample {
                 gpio.unprovisionPin(p);
             }
         }
-        gpio.shutdown();
+//        gpio.shutdown();
     }
 
 

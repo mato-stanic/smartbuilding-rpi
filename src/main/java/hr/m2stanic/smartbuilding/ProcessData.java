@@ -19,21 +19,21 @@ public class ProcessData {
                 HashMap<String, Pin> apartmentRooms = apartmentGpios.get(apartment.getApartmentId());
 
                 for (Map.Entry<String, Pin> stringPinEntry : apartmentRooms.entrySet()) {
-                    System.out.println(stringPinEntry);
+//                    System.out.println(stringPinEntry);
                 }
                 ControlGpio.roomState(apartment, apartmentRooms);
             }else if(apartment.getApartmentId() == 104){
                 HashMap<String, Pin> apartmentRooms = apartmentGpios.get(apartment.getApartmentId());
 
                 for (Map.Entry<String, Pin> stringPinEntry : apartmentRooms.entrySet()) {
-                    System.out.println(stringPinEntry);
+//                    System.out.println(stringPinEntry);
                 }
                 ControlGpio.roomState(apartment, apartmentRooms);
             }else if(apartment.getApartmentId() == 131){
                 HashMap<String, Pin> apartmentRooms = apartmentGpios.get(apartment.getApartmentId());
 
                 for (Map.Entry<String, Pin> stringPinEntry : apartmentRooms.entrySet()) {
-                    System.out.println(stringPinEntry);
+//                    System.out.println(stringPinEntry);
                 }
                 ControlGpio.roomState(apartment, apartmentRooms);
             }
